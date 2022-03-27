@@ -1,0 +1,4 @@
+- git pull angularTodo     => to pull the repo from github
+- git add .                => to add all the changes 
+- git commit -m "message"  => to do a commit and put a message 
+- git push                 => to upload code on github
