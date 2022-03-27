@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # my files 
-.gitCommands.txt 
+src/gitCommand.txt
