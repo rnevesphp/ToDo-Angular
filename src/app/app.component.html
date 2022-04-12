@@ -1,24 +1,50 @@
-<h1>{{ title }}</h1>
-<ul>
-  <p *ngIf="todos.length == 0">
-    <span>Sem tarefas pra hoje</span>
+<h1 class="title animate__animated animate__tada">{{ title }}</h1>
+
+<ul class="animate__animated animate__flipInX" *ngIf="mode == 'list'">
+  <p class="text-center" *ngIf="todos.length == 0">
+    <span> Sem tarefas pra hoje </span>
   </p>
-  <li *ngFor=" let todo of todos">
-    {{ todo.id }}. {{ todo.title }} |
-    <button (click)="markAsDone(todo)" *ngIf="!todo.done">Concluir</button> |
-    <button (click)="markAsUndone(todo)" *ngIf="todo.done">Refazer</button> |
+  <li *ngFor="let todo of todos">
+    {{ todo.title }}
+    <button (click)="markAsDone(todo)" *ngIf="!todo.done">Concluir</button>
+    <button (click)="markAsUndone(todo)" *ngIf="todo.done">Refazer</button>
     <button (click)="remove(todo)">Remover</button>
-    <!-- click - uma ação de botão -->
   </li>
 </ul>
 
-<form [formGroup]="form">
-  <fieldset>
-    <label>Tarefa</label>
-    <input type="text" placeholder="Título da tarefa" maxlength="60" formControlName="title">
-    <span *ngIf="form.controls['title'].invalid && !form.controls['title'].pristine">
+<div id="modal" *ngIf="mode=='add'" class=" animate__animated animate__flipInX">
+  <h1 class="title-form text-center">Tarefa</h1>
+  <form [formGroup]="form">
+    <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="title" />
+
+    <span class="danger text-center" *ngIf="form.controls['title'].invalid && !form.controls['title'].pristine">
       Este campo deve conter entre 3 e 60 caracteres
+      <br>
     </span>
-    <button (click)="add();" [disabled]="form.invalid">Salvar</button>
-  </fieldset>
-</form>
+
+    <p class="text-center">
+      <button class="button" [disabled]="form.invalid" (click)="add()">
+        <i class="fa-solid fa-floppy-disk"></i> Salvar
+      </button>
+    </p>
+  </form>
+</div>
+
+<button class="add-button animate__animated animate__fadeInUp button" (click)="changeMode('add'); "
+  *ngIf="mode=='list'">
+  <i class="fa-solid fa-plus"></i>
+  Nova Tarefa
+</button>
+
+<button class="add-button animate__animated animate__fadeInUp button" (click)="changeMode('list'); "
+  *ngIf="mode=='add'">
+  <i class="fa-solid fa-xmark"></i>
+  Cancelar
+</button>
+
+<!-- 
+<select name="idiomas" id="lang">
+  <option value="en">{{ 'Inglês' | translate }}</option>
+  <option value="es">{{ 'Espanhol' | translate }}</option>
+  <option value="en">{{ 'Português' | translate }}</option>
+</select> -->

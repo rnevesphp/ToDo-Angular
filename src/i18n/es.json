@@ -1,0 +1,10 @@
+{ 
+   "Minhas Tarefas" : "Mis Tareas", 
+   "Remover" : "Eliminar", 
+   "Concluir" : "Completar", 
+   "Tarefa" : "Tarea" , 
+   "Salvar" : "Guardar", 
+   "Este campo deve conter entre 3 e 60 caracteres" : "Este campo debe contener entre 3 y 60 caracteres", 
+   "Sem tarefas pra hoje" : "Sin tareas para hoy" ,
+   "Titulo da Tarefa " : "Titulo de la tarea"
+}

@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { Todo } from 'src/models/todo.model';
 
+// O decorator @Component utiliza o 'selector' pra gerar 
+// uma tag HTML na qual se usará para injetar todo o conteúdo do nosso component, 
+// tanto lógica como estilização. 
 @Component({
-  // O decorator @Component utiliza o 'selector' pra gerar uma tag HTML na qual se usará para injetar todo o conteúdo do nosso component, tanto lógica como estilização. 
   selector: 'app-root',
-  // Usa o templateUrl para externalizar o HTML 
   templateUrl: './app.component.html',
-  // array que unifica todos os estilos CSS 
   styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
-  // empty array; o tipo any permite inserir qualquer tipo de dados dentro do array.
+  public title: String = 'Minhas Tarefas';
   public todos: Todo[] = [];
-  public title: string = 'Minhas Tarefas';
   public form: FormGroup;
-
+  public mode: string = 'list';
   /**
-   * method chamado ao inicializar o component
+   * @param fb => formBuilder usado para criar um grupo
    */
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -33,7 +33,10 @@ export class AppComponent {
   }
 
   /**
-   * 
+   * a função usa uma variável title obtida do forms.controls['title].value 
+   * depois numa segunda variável obtem o ID que recorre a lista de Todos e soma um mais 
+   * pra esse numero 
+   * chama a funçõa saveData() e depois a função clear(); 
    */
   add() {
     const title = this.form.controls['title'].value;
@@ -42,14 +45,15 @@ export class AppComponent {
     this.saveData();
     this.clear();
   }
+
   /**
-   * metodo para limpar o input uma evz adicionada uma tarefa
+   * metodo para limpar o input uma vez adicionada uma tarefa
    */
   clear() {
     this.form.reset();
   }
+
   /**
-   * 
    * @param todo => uma vez chamada a ação direta do HTML elimina o todo 
    * selecionado do array de Todos.
    */
@@ -58,6 +62,7 @@ export class AppComponent {
     if (index !== -1) {
       this.todos.splice(index, 1);
     }
+    this.saveData();
   }
 
   /**
@@ -66,6 +71,7 @@ export class AppComponent {
    */
   markAsDone(todo: Todo) {
     todo.done = true;
+    this.saveData()
   }
 
   /**
@@ -74,6 +80,7 @@ export class AppComponent {
    */
   markAsUndone(todo: Todo) {
     todo.done = false;
+    this.saveData();
   }
 
   /**
@@ -82,6 +89,7 @@ export class AppComponent {
   saveData() {
     const setData = JSON.stringify(this.todos);
     localStorage.setItem('todos', setData);
+    this.mode = 'list';
   }
 
   /**
@@ -89,7 +97,14 @@ export class AppComponent {
    * a página carrega
    */
   loadData() {
-    const getData = localStorage.getItem('todos');
-    this.todos = JSON.parse(getData);
+    let getDataTeste = localStorage.getItem('todos');
+    this.todos = JSON.parse(getDataTeste == null ? '' : getDataTeste);
+  }
+
+  /**
+   * 
+   */
+  changeMode(mode: string) {
+    this.mode = mode;
   }
 }
