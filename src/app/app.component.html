@@ -6,9 +6,9 @@
   </p>
   <li *ngFor="let todo of todos">
     {{ todo.title }}
-    <button (click)="markAsDone(todo)" *ngIf="!todo.done">Concluir</button>
-    <button (click)="markAsUndone(todo)" *ngIf="todo.done">Refazer</button>
-    <button (click)="remove(todo)">Remover</button>
+    <button (click)="markAsDone(todo)" *ngIf="!todo.done"><i class="fa-solid fa-check"></i></button>
+    <button (click)="markAsUndone(todo)" *ngIf="todo.done"><i class="fa-solid fa-circle-check"></i></button>
+    <button (click)="remove(todo)"><i class="fa-solid fa-trash-can"></i></button>
   </li>
 </ul>
 
@@ -16,11 +16,10 @@
   <h1 class="title-form text-center">Tarefa</h1>
   <form [formGroup]="form">
     <input type="text" placeholder="Titulo da tarefa" maxlength="60" formControlName="title" />
-
-    <span class="danger text-center" *ngIf="form.controls['title'].invalid && !form.controls['title'].pristine">
+    <small class="danger text-center" *ngIf="form.controls['title'].invalid && !form.controls['title'].pristine">
       Este campo deve conter entre 3 e 60 caracteres
       <br>
-    </span>
+    </small>
 
     <p class="text-center">
       <button class="button" [disabled]="form.invalid" (click)="add()">
